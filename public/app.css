@@ -1,0 +1,28 @@
+/*
+ * File: app.css
+ * Project: blog
+ * File Created: Friday, 16th September 2022 4:10:58 pm
+ * Author: Sohel Mahmud (sohel@staffasia.org)
+ * -----
+ * Last Modified: Friday, 16th September 2022 4:10:59 pm
+ * Modified By: Sohel Mahmud (sohel@staffasia.org)
+ * -----
+ * Copyright 2021 - 2022 StaffAsia, StaffAsia
+ */
+body{
+    background-color: white;
+    color: black;
+    max-width: 600px;
+    margin: auto;
+    font-family: sans-serif;
+}
+
+p{
+    line-height: 1.6;
+}
+
+article + article{
+    margin-top: 2em;
+    padding-top: 2em;
+    border-top: 1px solid #ccc;
+}
