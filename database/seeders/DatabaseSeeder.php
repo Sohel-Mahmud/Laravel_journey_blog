@@ -23,14 +23,28 @@ class DatabaseSeeder extends Seeder
         Category::truncate();
         Post::truncate();
 
-        $user = User::factory()->create();
+        //only create this user
+        $user = User::factory()->create(
+            [
+                'name' => 'John Doe'
+            ]
+        );
+
+        //sets all posts to this user
+        Post::factory(5)->create([
+            'user_id' => $user->id,
+        ]);
+
+        ///auto create, this will create 5 posts as well as their
+        /// respective user and category
+        //Post::factory(5)->create();
 
         // \App\Models\User::factory()->create([
         //     'name' => 'Test User',
         //     'email' => 'test@example.com',
         // ]);
 
-        $personal = Category::create([
+        /*$personal = Category::create([
             'name' => 'Personal',
             'slug' => 'person'
         ]);
@@ -70,6 +84,6 @@ class DatabaseSeeder extends Seeder
             'slug' => 'my-personal-post',
             'excerpt' => 'lorem ipsum dolar sit amet',
             'body' => '<p> Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus aliquet malesuada odio, eu sollicitudin ex molestie sit amet. Sed hendrerit finibus velit vel auctor. Donec ornare erat ut sapien pellentesque molestie. Nulla id mattis nibh, sed rhoncus erat. Aliquam pretium ultricies dui ac commodo. Aenean et sem luctus sapien faucibus porttitor eu nec elit. Proin non odio nec velit sodales lobortis quis nec ante. Aliquam mattis mattis ultricies. Mauris eros odio, mattis in ipsum nec, aliquam vehicula purus. Aenean rhoncus diam ex, in mattis felis euismod nec. Suspendisse ullamcorper bibendum molestie. Suspendisse suscipit purus sit amet augue venenatis, non vestibulum mi viverra. Praesent sit amet ex sodales, dictum eros ut, malesuada metus. </p>'
-        ]);
+        ]);*/
     }
 }

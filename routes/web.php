@@ -38,7 +38,7 @@ Route::get('/', function () {
     //ddd($posts);
 
     return view('posts', [
-        'posts' => Post::with('category')->get()  //get all post with respective category, this removes the n+1 problem
+        'posts' => Post::latest()->with('category')->get()  //get all post with respective category, this removes the n+1 problem
     ]);
 });
 
