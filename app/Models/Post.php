@@ -12,6 +12,9 @@ class Post extends Model
     //can't push any entry given on guarded array
     protected $guarded = [];
 
+    // for eager loading, so that multiple sql query is avoided
+    protected  $with = ['category', 'author'];
+
     /*
     this is used for slug based routing, can be used alternatively
     instead of Route::get('posts/{post:slug}' function(..){})
@@ -22,13 +25,16 @@ class Post extends Model
     }
 
     //for relation
-    public function category()
+    public function category() //this means it will look for category_id in db
     {
         // hasOne, hasMany, belongsTo, belongsToMany
         return $this->belongsTo(Category::class);
     }
 
-    public function user(){
-        return $this->belongsTo(User::class);
+    /// to change user to author as user means user_id,
+    /// we needs to pass a second argument on belongsTo
+    public function author()
+    {
+        return $this->belongsTo(User::class, 'user_id');
     }
 }

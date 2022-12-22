@@ -2,6 +2,7 @@
 
 use App\Models\Category;
 use App\Models\Post;
+use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
@@ -17,8 +18,6 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-
-
 
 
     /// using array_map
@@ -38,7 +37,9 @@ Route::get('/', function () {
     //ddd($posts);
 
     return view('posts', [
-        'posts' => Post::latest()->with('category')->get()  //get all post with respective category, this removes the n+1 problem
+        'posts' => Post::latest()->get()
+        //get all post with respective category, this removes the n+1 problem
+        //'posts' => Post::latest()->with('category', 'author')->get()
     ]);
 });
 
@@ -85,6 +86,15 @@ Route::get('posts/{post:slug}', function (Post $post) {     // Post::where('slug
 Route::get('categories/{category:slug}', function (Category $category){
     return view('posts',[
         'posts' => $category->posts
+        //eager load(['']) to reduce db query on loop
+        // 'posts' => $category->posts->load([''])
+    ]);
+});
+
+Route::get('authors/{author:id}', function (User $author) {
+
+    return view('posts', [
+        'posts' => $author->posts
     ]);
 });
 
