@@ -21,9 +21,9 @@ class PostController extends Controller
             'posts' => $posts->get(),
             'categories' => Category::all(),
             'currentCategory'=> null
-            /*
-            get all post with respective category, this removes the n+1 problem,
-            UPDATE: its now done on model so no need here
+            /**
+            * get all post with respective category, this removes the n+1 problem,
+            * UPDATE: its now done on model so no need here
             */
             //'posts' => Post::latest()->with('category', 'author')->get()
         ]);
