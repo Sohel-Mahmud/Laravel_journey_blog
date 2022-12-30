@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\PostController;
 use App\Models\Category;
 use App\Models\Post;
 use App\Models\User;
@@ -17,87 +18,30 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-
-
-    /// using array_map
-    /*$posts = array_map(function ($file){
-
-        $document = YamlFrontMatter::parseFile($file);
-
-        return new Post(
-            $document->title,
-            $document->excerpt,
-            $document->date,
-            $document->body(),
-            $document->slug,
-        );
-    }, $files);*/
-
-    //ddd($posts);
-
-    return view('posts', [
-        'posts' => Post::latest()->get(),
-        'categories' => Category::all()
-        //get all post with respective category, this removes the n+1 problem
-        //'posts' => Post::latest()->with('category', 'author')->get()
-    ]);
-});
+Route::get('/', [PostController::class, 'index'])->name('home');
 
 /// $slug = post catches the url peram and passes to the function
-Route::get('posts/{post:slug}', function (Post $post) {     // Post::where('slug', $post)->firstOrFail()
-
-    /// find a post by its slug and pass it ot a view called 'post'
-
-    //can be inlined
-    //$post = Post::find($slug);
-
-    return view('post', [
-        'post' => $post
-    ]);
-
-    /* //$path = __DIR__ . "/../resources/posts/{$slug}.html";
-
-    if( !file_exists($path = __DIR__ . "/../resources/posts/{$slug}.html")){
-        //die and dump
-        //dd('file not exists');
-        // die dump and debug
-        //ddd('file not exists');
-
-        abort(404);
-
-        //redirect or home
-        //return redirect('/');
-
-    }
-
-    //caching
-    $post = cache() -> remember("posts.{$slug}", 5, function () use ($path) {
-        var_dump("called by cache");
-        return file_get_contents($path);
-    });
-
-    //$post = file_get_contents($path);
-
-    return view('post', [
-        'post'=> $post
-    ]); */
-}); //post is the wildcard
+Route::get('posts/{post:slug}', [PostController::class, 'show']); //post is the wildcard
 
 Route::get('categories/{category:slug}', function (Category $category){
     return view('posts',[
-        'posts' => $category->posts
+        'posts' => $category->posts,
+        'currentCategory' => $category,
+        'categories' => Category::all(),
+
         //eager load(['']) to reduce db query on loop
         // 'posts' => $category->posts->load([''])
     ]);
-});
+})->name('category');
 
 Route::get('authors/{author:id}', function (User $author) {
 
     return view('posts', [
-        'posts' => $author->posts
+        'posts' => $author->posts,
+        'categories' => Category::all()
+
     ]);
-});
+})->name('author');
 
 Auth::routes();
 
