@@ -8,38 +8,34 @@ use Illuminate\Http\Request;
 
 class PostController extends Controller
 {
-    public function index(){
-        $posts = Post::latest();
-
-        if(request('search')){
-
-            $posts->where('title', 'like', '%' . request('search') . '%')
-                ->orWhere('body', 'like', '%' . request('search') . '%');
-        }
+    public function index()
+    {
 
         return view('posts', [
-            'posts' => $posts->get(),
+            'posts' => Post::latest()->filter(request(['search']))->get(),
             'categories' => Category::all(),
-            'currentCategory'=> null
-            /**
-            * get all post with respective category, this removes the n+1 problem,
-            * UPDATE: its now done on model so no need here
-            */
+            'currentCategory' => null
+        /**
+         * get all post with respective category, this removes the n+1 problem,
+         * UPDATE: its now done on model so no need here
+         */
             //'posts' => Post::latest()->with('category', 'author')->get()
         ]);
     }
 
-    public function show(Post $post){
+
+    public function show(Post $post)
+    {
         /// find a post by its slug and pass it ot a view called 'post'
 
-    //can be inlined
-    //$post = Post::find($slug);
+        //can be inlined
+        //$post = Post::find($slug);
 
-    return view('post', [
-        'post' => $post
-    ]);
+        return view('post', [
+            'post' => $post
+        ]);
 
-    /* //$path = __DIR__ . "/../resources/posts/{$slug}.html";
+        /* //$path = __DIR__ . "/../resources/posts/{$slug}.html";
 
     if( !file_exists($path = __DIR__ . "/../resources/posts/{$slug}.html")){
         //die and dump
