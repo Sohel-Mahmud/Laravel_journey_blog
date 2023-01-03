@@ -29,7 +29,7 @@ Route::get('categories/{category:slug}', function (Category $category){
         'currentCategory' => $category,
         'categories' => Category::all(),
 
-        //eager load(['']) to reduce db query on loop
+        // eager load(['']) to reduce db query on loop
         // 'posts' => $category->posts->load([''])
     ]);
 })->name('category');
