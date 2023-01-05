@@ -23,6 +23,7 @@ Route::get('/', [PostController::class, 'index'])->name('home');
 /// $slug = post catches the url peram and passes to the function
 Route::get('posts/{post:slug}', [PostController::class, 'show']); //post is the wildcard
 
+/// category can be done like this
 Route::get('categories/{category:slug}', function (Category $category){
     return view('posts',[
         'posts' => $category->posts,

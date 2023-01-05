@@ -14,7 +14,7 @@ class PostController extends Controller
         return view('posts', [
             'posts' => Post::latest()->filter(request(['search', 'category']))->get(),
             'categories' => Category::all(),
-            'currentCategory' => null
+            'currentCategory' => Category::where('slug', request('category'))->first()  /// another way is firstWhere
         /**
          * get all post with respective category, this removes the n+1 problem,
          * UPDATE: its now done on model so no need here
