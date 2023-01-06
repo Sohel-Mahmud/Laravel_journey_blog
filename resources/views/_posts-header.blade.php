@@ -12,7 +12,7 @@
 
             {{-- dorpdown using alpine --}}
 
-            <x-dropdown :categories="$categories" :currentCategory="$currentCategory">
+            <x-category-dropdown :categories="$categories" :currentCategory="$currentCategory">
 
                 {{-- This is a slot, will be used in dropdown as $slot --}}
                 <a href="/" class="block text-left px-3 text-sm leading-6 hover:bg-gray-300 focus:bg-gray-300">All
@@ -23,7 +23,7 @@
                     <x-icon name="down-arrow" />
                 </x-slot>
 
-            </x-dropdown>
+            </x-category-dropdown>
 
 
         </div>
