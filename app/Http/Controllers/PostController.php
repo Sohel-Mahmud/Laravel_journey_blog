@@ -12,7 +12,7 @@ class PostController extends Controller
     {
 
         return view('posts.index', [
-            'posts' => Post::latest()->filter(request(['search', 'category']))->get(),
+            'posts' => Post::latest()->filter(request(['search', 'category', 'author']))->get(),
           /**
          * get all post with respective category, this removes the n+1 problem,
          * UPDATE: its now done on model so no need here

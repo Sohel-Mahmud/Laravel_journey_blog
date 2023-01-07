@@ -49,6 +49,21 @@ class Post extends Model
                 ->where('categories.slug', $category)) */
             $query->whereHas('category', fn ($query) => $query->where('slug', $category))
         );
+
+        $query->when(
+            $filters['author'] ?? false,
+            fn ($query, $author) =>
+            /* $query->whereExists(fn ($query) =>
+            $query->from('categories')
+                ->whereColumn('categories.id', 'posts.category_id')
+                ->where('categories.slug', $category)) */
+            $query->whereHas('author', fn ($query) => $query->where('username', $author))
+        );
+
+        /**
+         * now you can filter like this
+         * /?author=authorname&search=searchtitle&category=categoryname
+         */
     }
 
     //for relation
