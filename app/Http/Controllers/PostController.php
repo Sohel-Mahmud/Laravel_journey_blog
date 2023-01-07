@@ -11,13 +11,12 @@ class PostController extends Controller
     public function index()
     {
 
-        return view('posts', [
+        return view('posts.index', [
             'posts' => Post::latest()->filter(request(['search', 'category']))->get(),
-            'categories' => Category::all(),
-            'currentCategory' => Category::where('slug', request('category'))->first()  /// another way is firstWhere
-        /**
+          /**
          * get all post with respective category, this removes the n+1 problem,
          * UPDATE: its now done on model so no need here
+         * Update: category is passed by CategoryDropdown Component
          */
             //'posts' => Post::latest()->with('category', 'author')->get()
         ]);
@@ -31,7 +30,7 @@ class PostController extends Controller
         //can be inlined
         //$post = Post::find($slug);
 
-        return view('post', [
+        return view('posts.show', [
             'post' => $post
         ]);
 

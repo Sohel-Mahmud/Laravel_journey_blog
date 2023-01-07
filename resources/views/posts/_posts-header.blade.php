@@ -12,7 +12,11 @@
 
             {{-- dorpdown using alpine --}}
 
-            <x-category-dropdown :categories="$categories" :currentCategory="$currentCategory">
+            {{-- this <x-cateogry-dropdown/> component has dedicated component class app\View\Components\CategoryDropdown, data is coming from that class --}}
+            {{-- Make dedicated component class if its used in too many views and controllers --}}
+            {{-- If no dedicated component class is made then simply just pass props, props part is commented out --}}
+
+            <x-category-dropdown {{-- :categories="$categories" :currentCategory="$currentCategory" --}} >
 
                 {{-- This is a slot, will be used in dropdown as $slot --}}
                 <a href="/" class="block text-left px-3 text-sm leading-6 hover:bg-gray-300 focus:bg-gray-300">All

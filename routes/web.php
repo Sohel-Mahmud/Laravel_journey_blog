@@ -27,8 +27,6 @@ Route::get('posts/{post:slug}', [PostController::class, 'show']); //post is the 
 Route::get('categories/{category:slug}', function (Category $category){
     return view('posts',[
         'posts' => $category->posts,
-        'currentCategory' => $category,
-        'categories' => Category::all(),
 
         // eager   load(['']) to reduce db query on loop
         // 'posts' => $category->posts->load([''])
@@ -39,7 +37,6 @@ Route::get('authors/{author:id}', function (User $author) {
 
     return view('posts', [
         'posts' => $author->posts,
-        'categories' => Category::all()
 
     ]);
 })->name('author');
