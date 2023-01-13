@@ -20,7 +20,7 @@
             <x-category-dropdown {{-- :categories="$categories" :currentCategory="$currentCategory" --}}>
 
                 {{-- This is a slot, will be used in dropdown as $slot --}}
-                <a href="/" class="block text-left px-3 text-sm leading-6 hover:bg-gray-300 focus:bg-gray-300">All
+                <a href="/?{{ http_build_query(request()->except('category','page')) }}"  class="block text-left px-3 text-sm leading-6 hover:bg-gray-300 focus:bg-gray-300">All
                     Categories</a>
 
                 {{-- Custom slot --}}

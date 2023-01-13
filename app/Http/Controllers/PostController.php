@@ -10,9 +10,12 @@ class PostController extends Controller
 {
     public function index()
     {
+        // it will return json api
+        //return Post::latest()->filter(request(['search', 'category', 'author']))->get();
+
 
         return view('posts.index', [
-            'posts' => Post::latest()->filter(request(['search', 'category', 'author']))->get(),
+            'posts' => Post::latest()->filter(request(['search', 'category', 'author']))->paginate(5),
           /**
          * get all post with respective category, this removes the n+1 problem,
          * UPDATE: its now done on model so no need here
